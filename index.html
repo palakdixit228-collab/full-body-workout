@@ -1,203 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Bodyweight Trainer</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Home Workout Pro</title>
+
 <style>
-*{box-sizing:border-box}
-body{font-family:Inter,system-ui;margin:0;background:#0f172a;color:white}
-header{padding:25px;text-align:center;background:#020617}
-h1{margin:0;font-size:34px}
-nav{display:flex;gap:15px;justify-content:center;margin-top:10px;flex-wrap:wrap}
-nav button{background:#1e293b;border:none;color:white;padding:10px 16px;border-radius:10px;cursor:pointer}
-nav button:hover{background:#38bdf8;color:black}
-section{padding:40px;max-width:1100px;margin:auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.card{background:#1e293b;border-radius:16px;padding:20px;box-shadow:0 10px 25px rgba(0,0,0,0.3)}
-.card h3{margin-top:0;color:#38bdf8}
-.workout{margin:6px 0;font-size:14px}
-.hidden{display:none}
-.music{margin-top:15px}
-footer{text-align:center;padding:30px;background:#020617;margin-top:40px}
-.level{margin-top:10px;font-size:13px;opacity:.8}
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+margin:0;
+}
+
+header{
+background:#020617;
+text-align:center;
+padding:20px;
+}
+
+nav{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+background:#020617;
+padding:10px;
+}
+
+nav button{
+margin:4px;
+padding:8px 14px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+cursor:pointer;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:15px;
+border-radius:8px;
+margin:10px 0;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+margin-top:10px;
+}
+
+.timer{
+font-size:32px;
+text-align:center;
+margin:20px;
+}
+
+footer{
+background:#020617;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
 </style>
+
 </head>
+
 <body>
 
 <header>
-<h1>AI Bodyweight Trainer</h1>
-<p>No Equipment • Targeted Muscle Training • Smart Workout</p>
-
-<nav>
-<button onclick="show('chest')">Chest</button>
-<button onclick="show('back')">Back</button>
-<button onclick="show('legs')">Legs</button>
-<button onclick="show('biceps')">Biceps</button>
-<button onclick="show('triceps')">Triceps</button>
-<button onclick="show('forearms')">Forearms</button>
-<button onclick="show('calves')">Calves</button>
-<button onclick="show('core')">Abs / Core</button>
-</nav>
-
-<div class="music">
-<button onclick="connectSpotify()">Connect Spotify Music</button>
-</div>
-
+<h1>Home Workout Pro</h1>
+<p>AI Bodyweight Fitness System</p>
 </header>
 
-<section id="chest" class="muscle">
-<h2>Chest Workout</h2>
-<div class="grid">
-<div class="card">
-<h3>Upper Chest</h3>
-<div class="workout">Decline Pushups</div>
-<div class="workout">Pike Pushups</div>
-<div class="workout">Feet Elevated Pushups</div>
-<div class="level">Beginner → Advanced</div>
+<nav id="muscleNav"></nav>
+
+<div class="container">
+
+<h2>Search Exercise</h2>
+<input id="searchBox" placeholder="Search exercise..." onkeyup="searchExercise()">
+
+<div id="exerciseResults" class="grid"></div>
+
+<h2>AI Workout Generator</h2>
+
+<div class="card" id="aiWorkout">
+Click button to generate workout
 </div>
 
-<div class="card">
-<h3>Middle Chest</h3>
-<div class="workout">Standard Pushups</div>
-<div class="workout">Wide Pushups</div>
-<div class="workout">Explosive Pushups</div>
+<button onclick="generateWorkout()">Generate Workout</button>
+
+<h2>Difficulty Filter</h2>
+
+<button onclick="filterDifficulty('Beginner')">Beginner</button> <button onclick="filterDifficulty('Intermediate')">Intermediate</button> <button onclick="filterDifficulty('Advanced')">Advanced</button>
+
+<h2>Workout Timer</h2>
+
+<div class="timer" id="timer">60</div>
+
+<div style="text-align:center">
+<button onclick="startTimer()">Start</button>
 </div>
 
-<div class="card">
-<h3>Inner Chest</h3>
-<div class="workout">Diamond Pushups</div>
-<div class="workout">Close Pushups</div>
-</div>
-</div>
-</section>
+<h2>Workout Music</h2>
 
-<section id="back" class="muscle hidden">
-<h2>Back Workout</h2>
-<div class="grid">
-<div class="card">
-<h3>Upper Back</h3>
-<div class="workout">Superman Hold</div>
-<div class="workout">Reverse Snow Angels</div>
-<div class="workout">Prone Y Raises</div>
-</div>
+<iframe style="border-radius:12px"
+src="https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP"
+width="100%" height="380"></iframe>
 
-<div class="card">
-<h3>Lats</h3>
-<div class="workout">Floor Pulls</div>
-<div class="workout">Towel Rows</div>
-<div class="workout">Door Rows</div>
 </div>
-</div>
-</section>
-
-<section id="legs" class="muscle hidden">
-<h2>Leg Workout</h2>
-<div class="grid">
-<div class="card">
-<h3>Quads</h3>
-<div class="workout">Bodyweight Squats</div>
-<div class="workout">Jump Squats</div>
-<div class="workout">Bulgarian Split Squats</div>
-</div>
-
-<div class="card">
-<h3>Hamstrings</h3>
-<div class="workout">Glute Bridges</div>
-<div class="workout">Nordic Curl Assisted</div>
-<div class="workout">Single Leg Bridges</div>
-</div>
-</div>
-</section>
-
-<section id="biceps" class="muscle hidden">
-<h2>Biceps</h2>
-<div class="grid">
-<div class="card">
-<h3>Biceps Bodyweight</h3>
-<div class="workout">Towel Curls</div>
-<div class="workout">Chin Up Hold</div>
-<div class="workout">Inverted Rows</div>
-</div>
-</div>
-</section>
-
-<section id="triceps" class="muscle hidden">
-<h2>Triceps</h2>
-<div class="grid">
-<div class="card">
-<h3>Triceps</h3>
-<div class="workout">Bench Dips</div>
-<div class="workout">Diamond Pushups</div>
-<div class="workout">Pseudo Pushups</div>
-</div>
-</div>
-</section>
-
-<section id="forearms" class="muscle hidden">
-<h2>Forearms</h2>
-<div class="grid">
-<div class="card">
-<h3>Grip Strength</h3>
-<div class="workout">Fingertip Pushups</div>
-<div class="workout">Towel Hang</div>
-<div class="workout">Plank Grip Hold</div>
-</div>
-</div>
-</section>
-
-<section id="calves" class="muscle hidden">
-<h2>Calves</h2>
-<div class="grid">
-<div class="card">
-<h3>Calf Development</h3>
-<div class="workout">Standing Calf Raises</div>
-<div class="workout">Single Leg Raises</div>
-<div class="workout">Jump Calf Raises</div>
-</div>
-</div>
-</section>
-
-<section id="core" class="muscle hidden">
-<h2>Abs & Core</h2>
-<div class="grid">
-<div class="card">
-<h3>Upper Abs</h3>
-<div class="workout">Crunches</div>
-<div class="workout">Toe Touch Crunch</div>
-</div>
-
-<div class="card">
-<h3>Lower Abs</h3>
-<div class="workout">Leg Raises</div>
-<div class="workout">Reverse Crunch</div>
-</div>
-
-<div class="card">
-<h3>Core Stability</h3>
-<div class="workout">Plank</div>
-<div class="workout">Mountain Climbers</div>
-<div class="workout">Hollow Hold</div>
-</div>
-</div>
-</section>
 
 <footer>
-<p>AI Bodyweight Trainer • Train Every Muscle Without Equipment</p>
+<p>Home Workout Pro</p>
 </footer>
 
 <script>
-function show(muscle){
-let sections=document.querySelectorAll('.muscle');
-sections.forEach(s=>s.classList.add('hidden'));
-document.getElementById(muscle).classList.remove('hidden');
+
+const muscles=[
+"Neck","Traps","Shoulders","Chest","Upper Back","Lats","Lower Back",
+"Biceps","Triceps","Forearms","Abs","Obliques","Serratus","Glutes",
+"Quads","Hamstrings","Calves","Hip Flexors","Adductors","Full Body"
+]
+
+const nav=document.getElementById("muscleNav")
+
+muscles.forEach(m=>{
+let b=document.createElement("button")
+b.innerText=m
+b.onclick=()=>showMuscle(m)
+nav.appendChild(b)
+})
+
+let exercises=[]
+
+muscles.forEach(m=>{
+for(let i=1;i<=50;i++){
+
+exercises.push({
+name:m+" Exercise "+i,
+muscle:m,
+difficulty:["Beginner","Intermediate","Advanced"][i%3],
+gif:"https://media.giphy.com/media/3o7TKMt1VVNkHV2PaE/giphy.gif"
+})
+
+}
+})
+
+function showMuscle(m){
+
+let results=document.getElementById("exerciseResults")
+
+results.innerHTML=""
+
+exercises.filter(e=>e.muscle===m).slice(0,12).forEach(e=>{
+
+results.innerHTML+=`
+<div class="card">
+<h4>${e.name}</h4>
+<p>${e.muscle} | ${e.difficulty}</p>
+<img src="${e.gif}" width="100%">
+<button onclick="saveProgress('${e.name}')">Complete</button>
+</div>
+`
+
+})
+
 }
 
-function connectSpotify(){
-alert('To enable music you need to connect a Spotify API key later. This button is placeholder for Spotify integration.');
+function searchExercise(){
+
+let q=document.getElementById("searchBox").value.toLowerCase()
+
+let results=document.getElementById("exerciseResults")
+
+results.innerHTML=""
+
+exercises.filter(e=>e.name.toLowerCase().includes(q)).slice(0,12).forEach(e=>{
+
+results.innerHTML+=`
+<div class="card">
+<h4>${e.name}</h4>
+<p>${e.muscle}</p>
+<img src="${e.gif}" width="100%">
+</div>
+`
+
+})
+
 }
+
+function generateWorkout(){
+
+let workout=""
+
+for(let i=0;i<5;i++){
+
+let r=exercises[Math.floor(Math.random()*exercises.length)]
+
+workout+=r.name+" - 15 reps<br>"
+
+}
+
+document.getElementById("aiWorkout").innerHTML=workout
+
+}
+
+function filterDifficulty(d){
+
+let results=document.getElementById("exerciseResults")
+
+results.innerHTML=""
+
+exercises.filter(e=>e.difficulty===d).slice(0,12).forEach(e=>{
+
+results.innerHTML+=`
+<div class="card">
+<h4>${e.name}</h4>
+<p>${e.muscle}</p>
+<img src="${e.gif}" width="100%">
+</div>
+`
+
+})
+
+}
+
+function startTimer(){
+
+let t=60
+
+let timer=document.getElementById("timer")
+
+let interval=setInterval(()=>{
+
+t--
+
+timer.innerText=t
+
+if(t<=0) clearInterval(interval)
+
+},1000)
+
+}
+
+function saveProgress(ex){
+
+let progress=JSON.parse(localStorage.getItem("progress"))||[]
+
+progress.push(ex)
+
+localStorage.setItem("progress",JSON.stringify(progress))
+
+alert("Exercise saved to progress")
+
+}
+
 </script>
 
 </body>
 </html>
+
+
